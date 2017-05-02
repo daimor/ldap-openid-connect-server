@@ -14,8 +14,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-           <source>${java-version}</source>
-           <target>${java-version}</target>
+          <source>${java-version}</source>
+          <target>${java-version}</target>
         </configuration>
       </plugin>
       <plugin>
@@ -33,16 +33,56 @@
         </configuration>
       </plugin>
     </plugins>
-   </build>
-   <dependencies>
-      <dependency>
-        <groupId>org.mitre</groupId>
-        <artifactId>openid-connect-server-webapp</artifactId>
-        <type>war</type>
-      </dependency>
-      <dependency>
-      	<groupId>org.mitre</groupId>
-       	<artifactId>openid-connect-common</artifactId>
-      </dependency>
-    </dependencies>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.mitre</groupId>
+      <artifactId>openid-connect-server-webapp</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.mitre</groupId>
+      <artifactId>openid-connect-common</artifactId>
+    </dependency>
+  </dependencies>
+  <profiles>
+    <profile>
+      <id>jetty-run</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>9.3.18.v20170406</version>
+            <configuration>
+              <webAppSourceDirectory>
+                ${project.build.directory}/${project.build.finalName}
+              </webAppSourceDirectory>
+              <systemProperties>
+                <systemProperty>
+                  <name>oidc.issuer</name>
+                  <value>http://localhost:8080/</value>
+                </systemProperty>
+              </systemProperties>
+              <httpConnector>
+                <port>8080</port>
+              </httpConnector>
+              <webApp>
+                <contextPath>/</contextPath>
+              </webApp>
+            </configuration>
+            <executions>
+              <execution>
+                <id>jetty-run</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

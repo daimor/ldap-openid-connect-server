@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright 2014 The MITRE Corporation 
+  Copyright 2017 The MITRE Corporation
     and the MIT Kerberos and Internet Trust Consortium
   
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,7 +32,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<bean id="configBean" class="org.mitre.openid.connect.config.ConfigurationPropertiesBean">
-		<property name="issuer" value="http://localhost:8080/ldap-openid-connect-server/" />
+		<property name="issuer" value="${oidc.issuer}" />
  		<property name="logoImageUrl" value="resources/images/openid_connect_small.png" />
  		<property name="topbarTitle" value="OpenID Connect Server" />
 	</bean>
